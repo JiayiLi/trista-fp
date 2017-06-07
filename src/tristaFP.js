@@ -20,20 +20,26 @@
 	var tristaFP = {};
 
 	// 判断类型
-	// function type(){
-	// 
-	// }
-	// 
-	
+	function type(obj){
+		if(!obj){
+			throw "function:type need 1 param";
+		}
+
+		return toString.apply(obj).split(' ')[1].split(']')[0];
+	}
 
 	function isArrayLike(obj){
-
+		if(!obj){
+			throw "function:isArrayLike need 1 param";
+		}
+		var length = "length" in obj && obj.length;
+		return typeof length == 'number' && length >0  && (length-1) in obj;
 	}
 
 	function toArray(obj){
 		// 如果obj没有内容
 		if(!obj){
-			throw "function:isArrayLike need 1 param";
+			throw "function:toArray need 1 param";
 		}
 
 		//如果obj是数组
@@ -79,7 +85,7 @@
 
 	// test
 	tristaFP.toArray = toArray;
-	tristaFP.getObjKeys = getObjKeys;
+	tristaFP.isArrayLike = isArrayLike;
 
 	return  tristaFP;
 })
