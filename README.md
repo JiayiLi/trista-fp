@@ -2,11 +2,15 @@
 > Everyday, it gets a little easier.
 
 
+知识点
+
+
 测试用例 
 demo
 周期
 规范（umd）
-
+报错
+边缘判断
 
 思考：
 对dom元素进行操作
@@ -21,4 +25,7 @@ https://github.com/cssmagic/blog/issues/56
 zepto
 https://www.kancloud.cn/wangfupeng/zepto-design-srouce/173685
 http://www.css88.com/doc/zeptojs_api/
+
+
+
 
