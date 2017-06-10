@@ -12,7 +12,7 @@
  		ObjectProto = Object.prototype;
 
 	var slice = Array.prototype.slice,
-		concat = Array.prototype.concat,
+		// concat = Array.prototype.concat,
 		push = Array.prototype.push,
 		toString = Object.prototype.toString,
 		hasOwnProperty =  Object .prototype.hasOwnProperty;
@@ -36,31 +36,6 @@
 		return typeof length == 'number' && length >0  && (length-1) in obj;
 	}
 
-	function toArray(obj){
-		// 如果obj没有内容
-		if(!obj){
-			throw "function:toArray need 1 param";
-		}
-
-		//如果obj是数组
-		if(obj && obj.length){
-			return obj
-		}else {
-			var allKeysArr = getObjKeys(obj);
-
-			// 如果obj有length属性
-			if(obj.length){
-
-			}else{
-				obj.length = allKeysArr.length;
-				return obj;
-			}
-		}
-
-		// 如果是对象
-		
-	}
-
 	// 获取对象的 keys
 	function getObjKeys(obj){
 		if(!obj){
@@ -76,15 +51,69 @@
 
 		return keysArr;
 	}
+	
 
 	// 判断 obj 中是否存在某个 key
 	function hasKey(obj,key){
 		return obj != null && hasOwnProperty.call(obj, key);
 	}
 
+	// 获取obj对象 value 集合
+	function getObjValues(obj){
+		if(!obj){
+			throw "function:getValue need 1 param"
+		}
+
+		var valArr = [];
+		for(var key in obj){
+			if(hasKey(obj,key)){
+				valArr.push(obj[key]);
+			}
+		}
+
+		return valArr;
+	}
+
+	function cb (cb,target){
+		if(!target){
+			return cb;
+		}
+
+		var typeCb = type(cb);
+
+		if(typeCb === "Function"){
+			return optimizeCb(cb,target);
+		}
+	}
+
+	function optimizeCb(cb,target){
+		if(!target){
+			return cb;
+		}	
+
+		return function(value,index){
+			return cb.call(target,value,index)
+		}
+	}
+
+
+	tristaFP.each = function(target,func){
+		if(!target){
+			return [];
+		}
+		var result = cb(func,target);
+
+		for(var i = 0;i<target.length;i++){
+			result(target[i],i);
+		}
+		console.log(result);
+	} 
+
+
+
 
 	// test
-	tristaFP.toArray = toArray;
+	tristaFP.type = type;
 	tristaFP.isArrayLike = isArrayLike;
 
 	return  tristaFP;
